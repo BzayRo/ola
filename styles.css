@@ -1,0 +1,405 @@
+/* ========================================================
+   ESTILO INTERGALÁCTICO: MINIMALISTA + EXTRAVAGANTE (V3)
+   Estudiante: César Amarilla - 2.º BTI 6.ª Sección
+   ======================================================== */
+
+/* Registrar variable de ángulo para la animación giratoria del borde */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+:root {
+  --bg-space: #06070a;
+  --card-bg: #0f121d;
+  --card-border: rgba(0, 242, 195, 0.18);
+  --pink-neon: #ff2a75;
+  --pink-glow: rgba(255, 42, 117, 0.4);
+  --cyan-water: #00f2c3;
+  --cyan-glow: rgba(0, 242, 195, 0.4);
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  line-height: 1.7;
+  background-color: var(--bg-space);
+  /* Fondo con nebulosas sutiles */
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(255, 42, 117, 0.08) 0%, transparent 35%),
+    radial-gradient(circle at 90% 80%, rgba(0, 242, 195, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(15, 18, 29, 0.5) 0%, var(--bg-space) 100%);
+  background-attachment: fixed;
+  color: var(--text-main);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ========================================================
+   MÁS PLANETAS Y ESTRELLAS EN EL FONDO (CONTORNO CYAN NEÓN)
+   ======================================================== */
+
+/* Planetas, Luna y Cometa en el lateral izquierdo */
+body::before {
+  content: '🪐   🌙   ☄️   🪐';
+  position: fixed;
+  top: 5%;
+  left: 1.5%;
+  font-size: 2.2rem;
+  writing-mode: vertical-rl;
+  letter-spacing: 40px;
+  opacity: 0.35;
+  filter: drop-shadow(0 0 10px var(--cyan-water)) drop-shadow(0 0 20px var(--cyan-water));
+  animation: float-left 12s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Estrellas, OVNI y Destellos en el lateral derecho */
+body::after {
+  content: '✨   🛸   ✦   🌟   💫';
+  position: fixed;
+  bottom: 5%;
+  right: 1.5%;
+  font-size: 2rem;
+  color: var(--cyan-water);
+  writing-mode: vertical-rl;
+  letter-spacing: 35px;
+  opacity: 0.35;
+  text-shadow: 0 0 10px var(--cyan-water), 0 0 20px var(--cyan-water);
+  animation: float-right 10s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes float-left {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(30px) rotate(10deg); }
+}
+
+@keyframes float-right {
+  0% { transform: translateY(0) scale(0.95); opacity: 0.25; }
+  100% { transform: translateY(-25px) scale(1.1); opacity: 0.5; }
+}
+
+.container {
+  max-width: 1000px;
+  margin: 25px auto;
+  padding: 0 15px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Encabezado y Navegación Espacial */
+header {
+  background: rgba(8, 10, 16, 0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--cyan-glow);
+  padding: 20px 0 10px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+}
+
+.header-container {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.header-container h1 {
+  font-size: 2rem;
+  background: linear-gradient(135deg, var(--cyan-water), var(--pink-neon));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 18px var(--pink-glow);
+}
+
+.sub-header {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  list-style: none;
+  gap: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+nav a {
+  color: var(--text-main);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+nav a:hover {
+  color: var(--cyan-water);
+  border-color: var(--cyan-water);
+  box-shadow: 0 0 12px var(--cyan-glow);
+  background: rgba(0, 242, 195, 0.08);
+}
+
+/* ========================================================
+   EFECTO "FLOW": LUZ ROSADO ROJIZO GIRANDO SOLO POR EL BORDES
+   ======================================================== */
+.card {
+  position: relative;
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 25px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1;
+}
+
+/* Borde por defecto */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Haz de luz de 1 solo color (Rosado Rojizo) girando en el contorno */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: -2px; /* Grosor del borde */
+  border-radius: 14px;
+  background: conic-gradient(
+    from var(--angle), 
+    transparent 60%, 
+    rgba(255, 42, 117, 0.25) 80%, 
+    var(--pink-neon) 95%, 
+    transparent 100%
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  animation: rotate-flow 3s linear infinite;
+}
+
+@keyframes rotate-flow {
+  0% { --angle: 0deg; }
+  100% { --angle: 360deg; }
+}
+
+/* Activación al pasar el cursor encima */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card:hover::after {
+  opacity: 0;
+}
+
+.card h2 {
+  font-size: 1.4rem;
+  color: var(--cyan-water);
+  border-bottom: 2px solid var(--pink-neon);
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Datos de identificación */
+.info-list {
+  list-style: none;
+}
+
+.info-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 1rem;
+}
+
+.info-list strong {
+  color: var(--pink-neon);
+}
+
+/* ========================================================
+   SUB-CUADROS (CONCEPTOS Y APLICACIÓN PRÁCTICA)
+   ======================================================== */
+.grid-concepts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.concept-item {
+  background: rgba(8, 9, 13, 0.7);
+  border: 1px solid rgba(0, 242, 195, 0.2);
+  border-left: 4px solid var(--pink-neon);
+  padding: 18px;
+  border-radius: 8px;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.concept-item:hover {
+  transform: translateY(-4px);
+  border-color: var(--pink-neon);
+  box-shadow: 0 0 15px var(--pink-glow), 0 0 5px var(--pink-neon);
+}
+
+.concept-item h3 {
+  font-size: 1.1rem;
+  color: var(--cyan-water);
+  margin-bottom: 8px;
+}
+
+/* ========================================================
+   ILUMINACIÓN DE RESPIRACIÓN EN TEXTOS
+   ======================================================== */
+.question-block {
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.question-block h3 {
+  font-size: 1.1rem;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+@keyframes text-breath {
+  0%, 100% {
+    text-shadow: 0 0 3px rgba(0, 242, 195, 0.15);
+    color: #cbd5e1;
+  }
+  50% {
+    text-shadow: 0 0 8px rgba(0, 242, 195, 0.45), 0 0 14px rgba(0, 242, 195, 0.18);
+    color: #f1f5f9;
+  }
+}
+
+.question-block p, 
+.question-block li, 
+.card p {
+  animation: text-breath 4s ease-in-out infinite;
+}
+
+.question-block ol {
+  margin-left: 20px;
+  padding-top: 6px;
+}
+
+.question-block code {
+  background: rgba(255, 42, 117, 0.15);
+  color: var(--pink-neon);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+/* Esquema Visual */
+.visual-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  background: rgba(5, 6, 10, 0.85);
+  border: 1px solid var(--pink-neon);
+  padding: 22px;
+  border-radius: 10px;
+  margin-top: 15px;
+  box-shadow: 0 0 15px var(--pink-glow);
+}
+
+.step-box {
+  background: linear-gradient(135deg, #111420, #1a1e30);
+  color: var(--cyan-water);
+  border: 1px solid var(--cyan-water);
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.95rem;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step-box:hover {
+  transform: translateY(-4px);
+  border-color: var(--pink-neon);
+  box-shadow: 0 0 15px var(--pink-glow), 0 0 5px var(--pink-neon);
+}
+
+.arrow {
+  font-size: 1.8rem;
+  color: var(--pink-neon);
+  text-shadow: 0 0 8px var(--pink-neon);
+}
+
+/* Enlaces */
+a {
+  color: var(--cyan-water);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--pink-neon);
+}
+
+/* Pie de página */
+footer {
+  text-align: center;
+  padding: 25px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(0, 242, 195, 0.15);
+  margin-top: 30px;
+}
+
+/* Adaptabilidad para Celulares */
+@media (max-width: 600px) {
+  .header-container h1 {
+    font-size: 1.5rem;
+  }
+  nav ul {
+    gap: 6px;
+  }
+  nav a {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+  }
+  .visual-box {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .arrow {
+    transform: rotate(90deg);
+  }
+  body::before, body::after {
+    font-size: 1.5rem;
+    letter-spacing: 20px;
+  }
+}
